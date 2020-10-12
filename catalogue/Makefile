@@ -1,4 +1,4 @@
-NAME = weaveworksdemos/catalogue
+NAME = catalogue
 DBNAME = weaveworksdemos/catalogue-db
 
 TAG=$(TRAVIS_COMMIT)
@@ -22,3 +22,6 @@ dockertravisbuild: build
 	docker build -t $(DBNAME):$(TAG) -f docker/catalogue-db/Dockerfile docker/catalogue-db/
 	docker login -u $(DOCKER_USER) -p $(DOCKER_PASS)
 	scripts/push.sh
+
+
+#Runing cataloiuge-db  docker run -it -e MYSQL_ROOT_PASSWORD=rehab -p 8083:80 catalogue-db 
