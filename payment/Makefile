@@ -1,4 +1,4 @@
-NAME = weaveworksdemos/payment
+NAME = payment
 INSTANCE = payment
 
 .PHONY: default copy test

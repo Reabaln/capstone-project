@@ -24,4 +24,4 @@ dockertravisbuild: build
 	scripts/push.sh
 
 
-#Runing cataloiuge-db  docker run -it -e MYSQL_ROOT_PASSWORD=rehab -p 8083:80 catalogue-db 
+#Runing cataloiuge-db: docker run -it --network= host -d -e MYSQL_ROOT_PASSWORD=rehab -e  MYSQL_DATABASE=watcher -p 8083:33060 catalogue-db 
