@@ -53,7 +53,7 @@ spec:
   - port: 27017
     targetPort: 27017
   selector:
-    name: carts-db
+    app: carts-db
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -160,7 +160,7 @@ spec:
   - port: 3306
     targetPort: 3306
   selector:
-    name: catalogue-db
+    app: catalogue-db
 ---
 apiVersion: apps/v1
 kind: Deployment

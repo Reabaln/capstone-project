@@ -1,8 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: web-app
-  namespace: test
+  name: socks-ingress
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
@@ -12,4 +11,25 @@ spec:
       - path: /
         backend:
           serviceName: front-end
-          servicePort: 8079
+          servicePort: 80
+      - path: /carts
+        backend:
+          serviceName: carts
+          servicePort: 80
+      - path: /shipping
+        backend:
+          serviceName: shipping
+          servicePort: 80
+      - path: /orders
+        backend:
+          serviceName: orders
+          servicePort: 80
+      - path: /catalogue
+        backend:
+          serviceName: catalogue
+          servicePort: 80
+      - path: /users
+        backend:
+          serviceName: users
+          servicePort: 80
+
