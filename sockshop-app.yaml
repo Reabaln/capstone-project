@@ -114,7 +114,7 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    name: carts
+    app: carts
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -209,7 +209,7 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    name: catalogue
+    app: catalogue
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -316,7 +316,7 @@ spec:
   - port: 27017
     targetPort: 27017
   selector:
-    name: orders-db
+    app: orders-db
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -377,7 +377,7 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    name: orders
+    app: orders
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -468,7 +468,7 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    name: queue-master
+    app: queue-master
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -518,7 +518,7 @@ spec:
   - port: 5672
     targetPort: 5672
   selector:
-    name: rabbitmq
+    app: rabbitmq
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -579,7 +579,7 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    name: shipping
+    app: shipping
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -688,4 +688,4 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    name: user
+    app: user
