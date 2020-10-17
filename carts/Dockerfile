@@ -1,5 +1,4 @@
-# syntax=docker/dockerfile:experimental
-FROM maven:3-jdk-8 as build
+FROM maven:3-jdk-11 as build
 WORKDIR /tmp
 
 copy src /tmp/src
@@ -7,11 +6,7 @@ copy pom.xml /tmp/
 
 RUN  mvn clean package
 
-<<<<<<< HEAD
 FROM adoptopenjdk/openjdk11:alpine
-=======
-from adoptopenjdk/openjdk8:alpine
->>>>>>> 7ae89c5fff92afcf421acbd364e32d484f24c32e
 
 COPY --from=build /tmp/target/carts.jar /carts.jar
 
@@ -33,9 +28,6 @@ LABEL org.label-schema.vendor="reabaln" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 7ae89c5fff92afcf421acbd364e32d484f24c32e
 ENTRYPOINT ["/opt/java/openjdk/bin/java","-jar","./carts.jar", "--port=80"]
 
