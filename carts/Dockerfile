@@ -5,9 +5,9 @@ WORKDIR /tmp
 copy src /tmp/src
 copy pom.xml /tmp/
 
-run --mount=type=cache,id=maven,target=/root/.m2,sharing=shared mvn clean package
+RUN  mvn clean package
 
-from adoptopenjdk/openjdk11:alpine
+FROM adoptopenjdk/openjdk11:alpine
 
 COPY --from=build /tmp/target/carts.jar /carts.jar
 
@@ -28,4 +28,7 @@ LABEL org.label-schema.vendor="reabaln" \
   org.label-schema.vcs-url="github.com:microservices-demo/carts.git" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
+
+
+ENTRYPOINT ["/opt/java/openjdk/bin/java","-jar","./carts.jar", "--port=80"]
 
