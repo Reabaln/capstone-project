@@ -520,7 +520,7 @@ spec:
     spec:
       containers:
       - name: user-db
-        image: reabaln/user-db:0.1
+        image: weaveworksdemos/user-db:0.4.0
         ports:
         - name: mongo
           containerPort: 27017
@@ -568,12 +568,12 @@ spec:
     spec:
       containers:
       - name: user
-        image: reabaln/user:0.1
+        image: weaveworksdemos/user:0.4.7
         ports:
         - containerPort: 80
         env:
         - name: MONGO_HOST
-          value: userdb:27017
+          value: user-db:27017
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
