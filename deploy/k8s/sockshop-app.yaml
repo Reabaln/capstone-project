@@ -520,7 +520,7 @@ spec:
     spec:
       containers:
       - name: user-db
-        image: weaveworksdemos/user-db:0.4.0
+        image: reabaln/users-db-test:latest
         ports:
         - name: mongo
           containerPort: 27017
@@ -568,7 +568,7 @@ spec:
     spec:
       containers:
       - name: user
-        image: weaveworksdemos/user:0.4.7
+        image: reabaln/user-dev:latest
         ports:
         - containerPort: 80
         env:
