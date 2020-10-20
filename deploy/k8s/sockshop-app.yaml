@@ -4,7 +4,6 @@ metadata:
   name: carts-db
   labels:
     name: carts-db
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -37,7 +36,6 @@ metadata:
   name: carts-db
   labels:
     name: carts-db
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -52,7 +50,6 @@ metadata:
   name: carts
   labels:
     name: carts
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -73,9 +70,28 @@ spec:
            value: zipkin.jaeger.svc.cluster.local
          - name: JAVA_OPTS
            value: -Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+        resources:
+          limits:
+            cpu: 300m
+            memory: 500Mi
+          requests:
+            cpu: 300m
+            memory: 500Mi
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
       volumes:
         - name: tmp-volume
           emptyDir:
@@ -89,7 +105,6 @@ metadata:
   name: carts
   labels:
     name: carts
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -104,7 +119,6 @@ metadata:
   name: catalogue-db
   labels:
     name: catalogue-db
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -135,7 +149,6 @@ metadata:
   name: catalogue-db
   labels:
     name: catalogue-db
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -150,7 +163,6 @@ metadata:
   name: catalogue
   labels:
     name: catalogue
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -164,8 +176,27 @@ spec:
       containers:
       - name: catalogue
         image: reabaln/catalogue:0.1
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
         ports:
         - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -175,7 +206,6 @@ metadata:
   name: catalogue
   labels:
     name: catalogue
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -188,7 +218,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: front-end
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -203,11 +232,26 @@ spec:
       - name: front-end
         image: reabaln/front-end:0.1
         resources:
+          limits:
+            cpu: 300m
+            memory: 1000Mi
           requests:
             cpu: 100m
-            memory: 100Mi
+            memory: 300Mi
         ports:
         - containerPort: 8079
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8079
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8079
+          initialDelaySeconds: 30
+          periodSeconds: 3
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -217,7 +261,6 @@ metadata:
   name: front-end
   labels:
     name: front-end
-  namespace: test
 spec:
   type: NodePort
   ports:
@@ -233,7 +276,6 @@ metadata:
   name: orders-db
   labels:
     name: orders-db
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -266,7 +308,6 @@ metadata:
   name: orders-db
   labels:
     name: orders-db
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -281,7 +322,6 @@ metadata:
   name: orders
   labels:
     name: orders
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -300,11 +340,30 @@ spec:
            value: zipkin.jaeger.svc.cluster.local
          - name: JAVA_OPTS
            value: -Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 200m
+            memory: 500Mi
         ports:
         - containerPort: 80
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
       volumes:
         - name: tmp-volume
           emptyDir:
@@ -318,7 +377,6 @@ metadata:
   name: orders
   labels:
     name: orders
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -333,7 +391,6 @@ metadata:
   name: payment
   labels:
     name: payment
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -347,8 +404,27 @@ spec:
       containers:
       - name: payment
         image: reabaln/payment:0.1
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 99m
+            memory: 100Mi
         ports:
         - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -358,7 +434,6 @@ metadata:
   name: payment
   labels:
     name: payment
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -373,7 +448,6 @@ metadata:
   name: queue-master
   labels:
     name: queue-master
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -387,8 +461,27 @@ spec:
       containers:
       - name: queue-master
         image: reabaln/queue-master:0.1
+        resources:
+          limits:
+            cpu: 300m
+            memory: 500Mi
+          requests:
+            cpu: 300m
+            memory: 500Mi
         ports:
         - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -400,7 +493,6 @@ metadata:
     name: queue-master
   annotations:
     prometheus.io/path: "/prometheus"
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -415,7 +507,6 @@ metadata:
   name: rabbitmq
   labels:
     name: rabbitmq
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -440,7 +531,6 @@ metadata:
   name: rabbitmq
   labels:
     name: rabbitmq
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -455,7 +545,6 @@ metadata:
   name: shipping
   labels:
     name: shipping
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -474,8 +563,27 @@ spec:
            value: zipkin.jaeger.svc.cluster.local
          - name: JAVA_OPTS
            value: -Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+        resources:
+          limits:
+            cpu: 300m
+            memory: 500Mi
+          requests:
+            cpu: 300m
+            memory: 500Mi
         ports:
         - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
@@ -492,7 +600,6 @@ metadata:
   name: shipping
   labels:
     name: shipping
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -507,7 +614,6 @@ metadata:
   name: user-db
   labels:
     name: user-db
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -520,7 +626,7 @@ spec:
     spec:
       containers:
       - name: user-db
-        image: weaveworksdemos/user-db:0.4.0
+        image: reabaln/users-db-test:latest
         ports:
         - name: mongo
           containerPort: 27017
@@ -540,7 +646,6 @@ metadata:
   name: user-db
   labels:
     name: user-db
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
@@ -555,7 +660,6 @@ metadata:
   name: user
   labels:
     name: user
-  namespace: test
 spec:
   replicas: 1
   selector:
@@ -568,12 +672,31 @@ spec:
     spec:
       containers:
       - name: user
-        image: weaveworksdemos/user:0.4.7
+        image: reabaln/user-dev:latest
+        resources:
+          limits:
+            cpu: 300m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
         ports:
         - containerPort: 80
         env:
         - name: MONGO_HOST
           value: user-db:27017
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -583,7 +706,6 @@ metadata:
   name: user
   labels:
     name: user
-  namespace: test
 spec:
   ports:
     # the port that this service should serve on
