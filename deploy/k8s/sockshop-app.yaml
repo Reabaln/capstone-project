@@ -404,7 +404,7 @@ spec:
       containers:
       - name: payment
         image: reabaln/payment:0.1
-      resources:
+        resources:
           limits:
             cpu: 100m
             memory: 100Mi
@@ -563,8 +563,27 @@ spec:
            value: zipkin.jaeger.svc.cluster.local
          - name: JAVA_OPTS
            value: -Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+        resources:
+          limits:
+            cpu: 300m
+            memory: 500Mi
+          requests:
+            cpu: 300m
+            memory: 500Mi
         ports:
         - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
@@ -654,11 +673,30 @@ spec:
       containers:
       - name: user
         image: reabaln/user-dev:latest
+        resources:
+          limits:
+            cpu: 300m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
         ports:
         - containerPort: 80
         env:
         - name: MONGO_HOST
           value: user-db:27017
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
