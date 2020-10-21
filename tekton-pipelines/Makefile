@@ -13,7 +13,7 @@ build-task:
 pipeline:
 	kubectl apply -f ./pipelines/cicd-pipeline.yaml -n test 
 front-end-runner: 
-	kubectl apply -f ./pipelines/cidc-runner.yaml -n test 
+	kubectl apply -f ./pipelines/cicd-runner.yaml -n test 
 rbac:
 	kubectl apply -f ./resources/rbac/service-account.yaml -n test
 	kubectl apply -f ./resources/rbac/clusterrole.yaml -n test
