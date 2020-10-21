@@ -3,13 +3,13 @@ kind: PipelineRun
 metadata:
   name: tutorial-pipeline-run-1
 spec:
-  serviceAccountName: tutorial-service
+  serviceAccountName: tekton-service-account
   pipelineRef:
     name: tutorial-pipeline
   resources:
     - name: source-repo
       resourceRef:
-        name: skaffold-git
+        name: app-git
     - name: web-image
       resourceRef:
-        name: skaffold-image-leeroy-web
+        name: app-image
