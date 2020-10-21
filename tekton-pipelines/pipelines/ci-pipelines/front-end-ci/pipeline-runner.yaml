@@ -18,3 +18,5 @@ spec:
       value: "0-dev"
     - name: environment
       value: "dev"
+    - name: pathToDockerFile
+      value: $(resources.inputs.docker-source.path)/front-end/Dockerfile
