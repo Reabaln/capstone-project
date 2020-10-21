@@ -37,6 +37,6 @@ spec:
               - build-skaffold-web
       params:
         - name: path
-          value: /workspace/source/examples/microservices/leeroy-web/kubernetes/deployment.yaml #configure: may change according to your source
+          value: /workspace/source/deploy/k8s/front-end-dep.yaml #configure: may change according to your source
         - name: yamlPathToImage
           value: "spec.template.spec.containers[0].image"

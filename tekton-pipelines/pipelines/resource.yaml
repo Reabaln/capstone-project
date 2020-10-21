@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
-  name: training-tekton-git
+  name: app-git
 spec:
   type: git
   params:
@@ -13,9 +13,9 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
-  name: training-tekton-image
+  name: app-image
 spec:
   type: image
   params:
     - name: url
-      value: reabaln/front-end
+      value: reabaln/front-end:0.2
