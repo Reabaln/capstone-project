@@ -1,15 +1,15 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: tutorial-pipeline-run-1
+  name: kaniko-test-pipeline-run
 spec:
   serviceAccountName: tekton-service-account
   pipelineRef:
-    name: tutorial-pipeline
-  resources:
-    - name: source-repo
-      resourceRef:
-        name: app-git
-    - name: web-image
-      resourceRef:
-        name: app-image
+    name: kaniko-test-pipeline
+  params:
+  - name: image
+    value: reabaln/front-end:0.3
+  workspaces:
+  - name: shared-workspace
+    persistentvolumeclaim:
+      claimName: kaniko-source-pvc

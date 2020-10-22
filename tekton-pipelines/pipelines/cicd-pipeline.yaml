@@ -1,42 +1,59 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: tutorial-pipeline
+  name: kaniko-test-pipeline
 spec:
-  resources:
-    - name: source-repo
-      type: git
-    - name: web-image
-      type: image
+  workspaces:
+  - name: shared-workspace
+  params:
+  - name: image
+    description: reference of the image to build
   tasks:
-    - name: build-skaffold-web
-      taskRef:
-        name: build-docker-image-from-git-source
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: url
+      value: https://github.com//Reabaln/capstone-project
+    - name: subdirectory
+      value: ""
+    - name: deleteExisting
+      value: "true"
+  - name: kaniko
+    taskRef:
+      name: kaniko
+    runAfter:
+    - fetch-repository
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    params:
+    - name: DOCKERFILE
+      value: ./front-end/Dockerfile
+    - name: CONTEXT
+      value: ./front-end
+    - name: IMAGE
+      value: $(params.image)
+    - name: EXTRA_ARGS
+      value: "--skip-tls-verify"
+  - name: verify-digest
+    runAfter:
+    - kaniko
+    params:
+    - name: digest
+      value: $(tasks.kaniko.results.IMAGE-DIGEST)
+    taskSpec:
       params:
-        - name: pathToDockerFile
-          value: /workspace/docker-source/front-end/Dockerfile
-        - name: pathToContext
-          value: /workspace/docker-source/front-end #configure: may change according to your source
-      resources:
-        inputs:
-          - name: docker-source
-            resource: source-repo
-        outputs:
-          - name: builtImage
-            resource: web-image
-    - name: deploy-web
-      taskRef:
-        name: deploy-using-kubectl
-      resources:
-        inputs:
-          - name: source
-            resource: source-repo
-          - name: image
-            resource: web-image
-            from:
-              - build-skaffold-web
-      params:
-        - name: path
-          value: /workspace/source/deploy/k8s/front-end-dep.yaml #configure: may change according to your source
-        - name: yamlPathToImage
-          value: "spec.template.spec.containers[0].image"
+      - name: digest
+      steps:
+      - name: bash
+        image: ubuntu
+        script: |
+          echo $(params.digest)
+          case .$(params.digest) in
+            ".sha"*) exit 0 ;;
+            *)       echo "Digest value is not correct" && exit 1 ;;
+          esac

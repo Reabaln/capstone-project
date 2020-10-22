@@ -9,7 +9,7 @@ tkn-cli:
 secrets:
 	kubectl apply -f ./resources/docker-secret.yaml -f ./resources/github-secret.yaml -n test
 build-task:
-	kubectl apply -f ./tasks/build-task.yaml -f ./tasks/release-task.yaml -n test
+	kubectl apply -f ./tasks/build-task.yaml -f ./tasks/release-task.yaml -f ./tasks/git-clone.yaml -n test
 pipeline:
 	kubectl apply -f ./pipelines/cicd-pipeline.yaml -n test 
 front-end-runner: 
@@ -21,5 +21,7 @@ rbac:
 	
 resource:
 	kubectl apply -f ./pipelines/resource.yaml -n test
+	kubectl apply -f ./resources/pvc.yaml -n test
+
 
 
