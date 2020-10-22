@@ -11,14 +11,11 @@ spec:
       type: string
       description: |
         The path to the image to replace in the yaml manifest (arg to yq)
-  resources:
-    inputs:
-      - name: source
-        type: git
-      - name: image
-        type: image
+  workspaces:
+    - name: source
   steps:
     - name: replace-image
+      workingDir: $(workspaces.source.path)
       image: mikefarah/yq
       command: ["yq"]
       args:
@@ -28,9 +25,12 @@ spec:
         - "$(params.yamlPathToImage)"
         - "$(resources.inputs.image.url)"
     - name: run-kubectl
+      workingDir: $(workspaces.source.path)
       image: lachlanevenson/k8s-kubectl
       command: ["kubectl"]
       args:
         - "apply"
         - "-f"
         - "$(params.path)"
+        - "-n"
+        - "test"

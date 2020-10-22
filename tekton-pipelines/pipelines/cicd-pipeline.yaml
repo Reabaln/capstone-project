@@ -57,3 +57,16 @@ spec:
             ".sha"*) exit 0 ;;
             *)       echo "Digest value is not correct" && exit 1 ;;
           esac
+  - name: deploy-web	
+    runAfter:
+    - verify-digest
+    taskRef:	
+      name: deploy-using-kubectl
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    params:	
+      - name: path	
+        value: ./deploy/k8s/front-end-dep.yaml #configure: may change according to your source	
+      - name: yamlPathToImage	
+        value: "spec.template.spec.containers[0].image"
