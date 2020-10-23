@@ -68,5 +68,3 @@ spec:
     params:	
       - name: path	
         value: ./deploy/k8s/front-end-dep.yaml #configure: may change according to your source	
-      - name: yamlPathToImage	
-        value: "spec.template.spec.containers[0].image"
