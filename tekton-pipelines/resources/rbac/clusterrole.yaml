@@ -5,7 +5,7 @@ metadata:
   namespace: test
 rules:
   - apiGroups: [""]
-    resources: ["pods", "namespaces", "secrets", "events", "serviceaccounts", "configmaps"]
+    resources: ["pods", "namespaces", "secrets", "events", "serviceaccounts", "configmaps", "services"]
     verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
   - apiGroups: ["apps"]
     resources: ["statefulsets", "deployments"]
