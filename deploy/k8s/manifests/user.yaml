@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-db
+  labels:
+    name: user-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: user-db
+  template:
+    metadata:
+      labels:
+        name: user-db
+    spec:
+      containers:
+      - name: user-db
+        image: reabaln/users-db-test:latest
+        ports:
+        - name: mongo
+          containerPort: 27017
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-db
+  labels:
+    name: user-db
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 27017
+    targetPort: 27017
+  selector:
+    name: user-db
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  labels:
+    name: user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+      - name: user
+        image: reabaln/user-dev:latest
+        resources:
+          limits:
+            cpu: 300m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
+        env:
+        - name: MONGO_HOST
+          value: user-db:27017
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+  labels:
+    name: user
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    targetPort: 80
+  selector:
+    app: user
