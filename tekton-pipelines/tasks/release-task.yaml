@@ -25,15 +25,14 @@ spec:
         - "-i"
         - "-e"
         - "s;__IMAGE__;$(params.imageUrl):$(params.imageTag);g"
-        - "/workspace/source/$(params.path)"
+        - "$(workspaces.source.path)/$(params.path)"
   steps:
     - name: run-kubectl
-      workingDir: $(workspaces.source.path)
       image: lachlanevenson/k8s-kubectl
       command: ["kubectl"]
       args:
         - "apply"
         - "-f"
-        - "$(params.path)"
+        - "$(workspaces.source.path)/$(params.path)"
         - "-n"
         - "test"
