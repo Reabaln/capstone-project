@@ -57,3 +57,15 @@ spec:
             ".sha"*) exit 0 ;;
             *)       echo "Digest value is not correct" && exit 1 ;;
           esac
+  - name: deploy-web	
+    runAfter:
+    - verify-digest
+    taskRef:	
+      name: deploy-using-kubectl
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    params:	
+      - name: path	
+        value: ./deploy/k8s/catalogue-dep.yaml #configure: may change according to your source	
+
