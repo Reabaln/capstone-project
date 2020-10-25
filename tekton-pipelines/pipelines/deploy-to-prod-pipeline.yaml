@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: to-prod
+spec:
+  workspaces:
+  - name: shared-workspace
+  tasks:
+  - name: deploy-web	
+    taskRef:	
+      name: deploy-using-kubectl
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    params:	
+      - name: path	
+        value: ./deploy/k8s/sockshop-app.yaml #configure: may change according to your source	
