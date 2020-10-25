@@ -6,7 +6,22 @@ spec:
   workspaces:
   - name: shared-workspace
   tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: url
+      value: https://github.com//Reabaln/capstone-project
+    - name: subdirectory
+      value: ""
+    - name: deleteExisting
+      value: "true"
   - name: deploy-web	
+    runAfter:
+    - fetch-repository
     taskRef:	
       name: deploy-using-kubectl
     workspaces:
