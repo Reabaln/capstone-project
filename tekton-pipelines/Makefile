@@ -22,6 +22,8 @@ rbac:
 resource:
 	kubectl apply -f ./pipelines/resource.yaml -n test
 	kubectl apply -f ./resources/pvc.yaml -n test
-
-
+carts: 
+	kubectl apply -f ./pipelines/ci-pipelines/carts-ci/carts-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/carts-ci/carts-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/carts-ci/carts-runner.yaml -n test
 

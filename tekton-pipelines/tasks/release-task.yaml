@@ -7,8 +7,25 @@ spec:
     - name: path
       type: string
       description: Path to the manifest to apply
+    - name: imageUrl
+      type: string
+      description: Url of image repository
+    - name: imageTag
+      type: string
+      description: Tag of the images to be used.
+      default: "latest"
+
   workspaces:
     - name: source
+  steps:
+    - name: update-yaml
+      image: alpine
+      command: ["sed"]
+      args:
+        - "-i"
+        - "-e"
+        - "s;__IMAGE__;$(params.imageUrl):$(params.imageTag);g"
+        - "/workspace/source/$(params.path)"
   steps:
     - name: run-kubectl
       workingDir: $(workspaces.source.path)
