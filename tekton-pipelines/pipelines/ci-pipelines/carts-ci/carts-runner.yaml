@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: carts-pipeline-run
+spec:
+  serviceAccountName: tekton-service-account
+  pipelineRef:
+    name: carts-pipeline
+  params:
+  - name: image
+    value: reabaln/carts
+  - name: tag
+    value: "0.2"
+  workspaces:
+  - name: shared-workspace
+    persistentvolumeclaim:
+      claimName: carts-source-pvc
