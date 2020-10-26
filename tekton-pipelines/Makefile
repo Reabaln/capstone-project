@@ -8,7 +8,7 @@ tkn-cli:
 
 secrets:
 	kubectl apply -f ./resources/docker-secret.yaml -f ./resources/github-secret.yaml -n test
-tasks:
+build-tasks:
 	kubectl apply -f ./tasks/build-task.yaml -f ./tasks/release-task.yaml -f ./tasks/git-clone.yaml -n test
 rbac:
 	kubectl apply -f ./resources/rbac/service-account.yaml -n test
@@ -54,7 +54,7 @@ catalogue:
 	kubectl apply -f ./pipelines/ci-pipelines/catalogue-ci/catalogue-runner.yaml -n test
 
 queue-master: 
-	kubectl apply -f ./pipelines/ci-pipelines/queue-master-ci/queue-master-pvc.yaml -n test
-	kubectl apply -f ./pipelines/ci-pipelines/queue-master-ci/queue-master-pipeline.yaml -n test
-	kubectl apply -f ./pipelines/ci-pipelines/queue-master-ci/queue-master-runner.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/queue-ci/queue-master-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/queue-ci/queue-master-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/queue-ci/queue-master-runner.yaml -n test
 
