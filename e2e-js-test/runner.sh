@@ -24,7 +24,7 @@ fi
 
 for test in $files
 do
-  node test/e2e/test_helper.js
+  node $PWD/source/e2e-js-test/test_helper.js
   casperjs test $test
   ret=$?
   if [ ! $ret == "0" ]; then code=1; fi
