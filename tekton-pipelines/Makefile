@@ -8,12 +8,8 @@ tkn-cli:
 
 secrets:
 	kubectl apply -f ./resources/docker-secret.yaml -f ./resources/github-secret.yaml -n test
-build-task:
+tasks:
 	kubectl apply -f ./tasks/build-task.yaml -f ./tasks/release-task.yaml -f ./tasks/git-clone.yaml -n test
-pipeline:
-	kubectl apply -f ./pipelines/cicd-pipeline.yaml -n test 
-front-end-runner: 
-	kubectl apply -f ./pipelines/cicd-runner.yaml -n test 
 rbac:
 	kubectl apply -f ./resources/rbac/service-account.yaml -n test
 	kubectl apply -f ./resources/rbac/clusterrole.yaml -n test
@@ -21,9 +17,44 @@ rbac:
 	
 resource:
 	kubectl apply -f ./pipelines/resource.yaml -n test
-	kubectl apply -f ./resources/pvc.yaml -n test
+
+all: front-end carts payment shipping queue-master orders user catalogue
 carts: 
 	kubectl apply -f ./pipelines/ci-pipelines/carts-ci/carts-pvc.yaml -n test
 	kubectl apply -f ./pipelines/ci-pipelines/carts-ci/carts-pipeline.yaml -n test
 	kubectl apply -f ./pipelines/ci-pipelines/carts-ci/carts-runner.yaml -n test
+payment: 
+	kubectl apply -f ./pipelines/ci-pipelines/payment-ci/payment-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/payment-ci/payment-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/payment-ci/payment-runner.yaml -n test
+
+shipping: 
+	kubectl apply -f ./pipelines/ci-pipelines/shipping-ci/shipping-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/shipping-ci/shipping-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/shipping-ci/shipping-runner.yaml -n test
+
+front-end: 
+	kubectl apply -f ./pipelines/ci-pipelines/front-end-ci/front-end-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/front-end-ci/front-end-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/front-end-ci/front-end-runner.yaml -n test
+
+user: 
+	kubectl apply -f ./pipelines/ci-pipelines/user-ci/user-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/user-ci/user-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/user-ci/user-runner.yaml -n test
+
+orders: 
+	kubectl apply -f ./pipelines/ci-pipelines/orders-ci/orders-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/orders-ci/orders-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/orders-ci/orders-runner.yaml -n test
+
+catalogue: 
+	kubectl apply -f ./pipelines/ci-pipelines/catalogue-ci/catalogue-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/catalogue-ci/catalogue-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/catalogue-ci/catalogue-runner.yaml -n test
+
+queue-master: 
+	kubectl apply -f ./pipelines/ci-pipelines/queue-master-ci/queue-master-pvc.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/queue-master-ci/queue-master-pipeline.yaml -n test
+	kubectl apply -f ./pipelines/ci-pipelines/queue-master-ci/queue-master-runner.yaml -n test
 
