@@ -12,7 +12,7 @@ done
 
 if [ -z $testfile ]
 then
-  files=$(ls e2e-js-test/*_test.js)
+  files=$(ls $PWD/e2e-js-test/*_test.js)
 fi
 
 for test in $files
