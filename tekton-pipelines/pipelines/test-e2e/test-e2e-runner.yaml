@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: e2e-test-pipeline-run
+spec:
+  serviceAccountName: tekton-service-account
+  pipelineRef:
+    name: e2e-test-pipeline
+  params:
+  - name: image
+    value: reabaln/e2e-test
+  - name: tag
+    value: "0.1"
+  workspaces:
+  - name: shared-workspace
+    persistentvolumeclaim:
+      claimName: test-e2e-source-pvc
