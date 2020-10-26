@@ -1,15 +1,17 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: kaniko-test-pipeline-run
+  name: front-end-pipeline-run
 spec:
   serviceAccountName: tekton-service-account
   pipelineRef:
-    name: kaniko-test-pipeline
+    name: front-end-pipeline
   params:
   - name: image
-    value: reabaln/front-end:0.3
+    value: reabaln/front-end
+  - tag:
+    value: "0.1"
   workspaces:
   - name: shared-workspace
     persistentvolumeclaim:
-      claimName: kaniko-source-pvc
+      claimName: front-end-source-pvc

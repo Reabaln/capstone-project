@@ -1,13 +1,15 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: kaniko-test-pipeline
+  name: front-end-pipeline
 spec:
   workspaces:
   - name: shared-workspace
   params:
   - name: image
     description: reference of the image to build
+  - name: tag
+    description: Tag of the images to build
   tasks:
   - name: fetch-repository
     taskRef:
@@ -36,7 +38,7 @@ spec:
     - name: CONTEXT
       value: ./front-end
     - name: IMAGE
-      value: $(params.image)
+      value: $(params.image):$(params.tag)
     - name: EXTRA_ARGS
       value: "--skip-tls-verify"
   - name: verify-digest
@@ -68,3 +70,7 @@ spec:
     params:	
       - name: path	
         value: ./deploy/k8s/front-end-dep.yaml #configure: may change according to your source	
+      - name: imageUrl
+        value: $(params.image) 
+      - name: imageTag
+        value: $(params.tag)
