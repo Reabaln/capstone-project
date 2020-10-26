@@ -19,7 +19,7 @@ spec:
       workspace: shared-workspace
     params:	
       - name: path	
-        value: ./e2e-js-test/runner.sh #configure: may change according to your source
+        value: e2e-js-test/runner.sh #configure: may change according to your source
       - name: imageUrl
         value: $(params.image) 
       - name: imageTag
