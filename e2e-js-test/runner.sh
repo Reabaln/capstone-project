@@ -10,9 +10,16 @@ do
   echo "$entry"
 done
 
+
+for entry in "$PWD/source"/*
+do
+  echo "$entry"
+done
+
+
 if [ -z $testfile ]
 then
-  files=$(ls $PWD/e2e-js-test/*_test.js)
+  files=$(ls $PWD/source/e2e-js-test/*_test.js)
 fi
 
 for test in $files
