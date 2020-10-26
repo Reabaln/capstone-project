@@ -8,7 +8,9 @@ spec:
     name: catalogue-pipeline
   params:
   - name: image
-    value: reabaln/catalogue:0.1
+    value: reabaln/catalogue
+  - name: tag
+    value: "0.1"
   workspaces:
   - name: shared-workspace
     persistentvolumeclaim:
