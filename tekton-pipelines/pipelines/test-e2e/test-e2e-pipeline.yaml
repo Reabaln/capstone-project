@@ -11,57 +11,7 @@ spec:
   - name: tag
     description: Tag of the images to build
   tasks:
-  - name: fetch-repository
-    taskRef:
-      name: git-clone
-    workspaces:
-    - name: output
-      workspace: shared-workspace
-    params:
-    - name: url
-      value: https://github.com//Reabaln/capstone-project
-    - name: subdirectory
-      value: ""
-    - name: deleteExisting
-      value: "true"
-  - name: kaniko
-    taskRef:
-      name: kaniko
-    runAfter:
-    - fetch-repository
-    workspaces:
-    - name: source
-      workspace: shared-workspace
-    params:
-    - name: DOCKERFILE
-      value: ./e2e-js-test/Dockerfile
-    - name: CONTEXT
-      value: ./e2e-js-test
-    - name: IMAGE
-      value: $(params.image):$(params.tag)
-    - name: EXTRA_ARGS
-      value: "--skip-tls-verify"
-  - name: verify-digest
-    runAfter:
-    - kaniko
-    params:
-    - name: digest
-      value: $(tasks.kaniko.results.IMAGE-DIGEST)
-    taskSpec:
-      params:
-      - name: digest
-      steps:
-      - name: bash
-        image: ubuntu
-        script: |
-          echo $(params.digest)
-          case .$(params.digest) in
-            ".sha"*) exit 0 ;;
-            *)       echo "Digest value is not correct" && exit 1 ;;
-          esac
   - name: run-test
-    runAfter:
-    - verify-digest
     taskRef:	
       name: e2e-test
     workspaces:
