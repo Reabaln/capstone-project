@@ -1,0 +1,76 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: queue-master-pipeline
+spec:
+  workspaces:
+  - name: shared-workspace
+  params:
+  - name: image
+    description: reference of the image to build
+  - name: tag
+    description: Tag of the images to build
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: url
+      value: https://github.com//Reabaln/capstone-project
+    - name: subdirectory
+      value: ""
+    - name: deleteExisting
+      value: "true"
+  - name: kaniko
+    taskRef:
+      name: kaniko
+    runAfter:
+    - fetch-repository
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    params:
+    - name: DOCKERFILE
+      value: ./queue-master/Dockerfile
+    - name: CONTEXT
+      value: ./queue-master
+    - name: IMAGE
+      value: $(params.image):$(params.tag)
+    - name: EXTRA_ARGS
+      value: "--skip-tls-verify"
+  - name: verify-digest
+    runAfter:
+    - kaniko
+    params:
+    - name: digest
+      value: $(tasks.kaniko.results.IMAGE-DIGEST)
+    taskSpec:
+      params:
+      - name: digest
+      steps:
+      - name: bash
+        image: ubuntu
+        script: |
+          echo $(params.digest)
+          case .$(params.digest) in
+            ".sha"*) exit 0 ;;
+            *)       echo "Digest value is not correct" && exit 1 ;;
+          esac
+  - name: deploy-web	
+    runAfter:
+    - verify-digest
+    taskRef:	
+      name: deploy-using-kubectl
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    params:	
+      - name: path	
+        value: ./deploy/k8s/manifests/queue-master.yaml #configure: may change according to your source
+      - name: imageUrl
+        value: $(params.image) 
+      - name: imageTag
+        value: $(params.tag)

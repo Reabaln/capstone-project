@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: shipping-pipeline-run
+spec:
+  serviceAccountName: tekton-service-account
+  pipelineRef:
+    name: shipping-pipeline
+  params:
+  - name: image
+    value: reabaln/shipping
+  - name: tag
+    value: "0.1"
+  workspaces:
+  - name: shared-workspace
+    persistentvolumeclaim:
+      claimName: shipping-source-pvc

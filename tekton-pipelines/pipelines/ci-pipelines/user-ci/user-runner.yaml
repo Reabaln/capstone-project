@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: user-pipeline-run
+spec:
+  serviceAccountName: tekton-service-account
+  pipelineRef:
+    name: user-pipeline
+  params:
+  - name: image
+    value: reabaln/user
+  - name: tag
+    value: "0.1"
+  workspaces:
+  - name: shared-workspace
+    persistentvolumeclaim:
+      claimName: user-source-pvc

@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: queue-master-pipeline-run
+spec:
+  serviceAccountName: tekton-service-account
+  pipelineRef:
+    name: queue-master-pipeline
+  params:
+  - name: image
+    value: reabaln/queue-master
+  - name: tag
+    value: "0.1"
+  workspaces:
+  - name: shared-workspace
+    persistentvolumeclaim:
+      claimName: queue-master-source-pvc
