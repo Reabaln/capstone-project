@@ -20,7 +20,7 @@ spec:
   steps:
   - name: run-test
     image: $(params.imageUrl):$(params.imageTag)
-    command: ["bin/sh"]
+    command: ["/bin/sh"]
     args:
       - "-c"
       - "$(workspaces.source.path)/$(params.path)"
