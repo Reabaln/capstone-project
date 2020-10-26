@@ -4,7 +4,12 @@ code=0
 testfile=$1
 files=$testfile
 echo $PWD
-echo ls 
+
+for entry in "$PWD"/*
+do
+  echo "$entry"
+done
+
 if [ -z $testfile ]
 then
   files=$(ls e2e-js-test/*_test.js)
