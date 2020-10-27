@@ -7,7 +7,7 @@
     casper.start("http://front-end", function() {
       this.clickLabel("Login");
       this.fill("#login-modal form", {
-        "username": "username",
+        "username": "my-username",
         "password": "password"
       }, true);
       this.click("#login-modal form button.btn.btn-primary");
