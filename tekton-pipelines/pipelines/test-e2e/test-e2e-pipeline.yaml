@@ -36,7 +36,7 @@ spec:
     - name: DOCKERFILE
       value: ./e2e-js-test/Dockerfile
     - name: CONTEXT
-      value: ./carts
+      value: ./e2e-js-test
     - name: IMAGE
       value: $(params.image):$(params.tag)
     - name: EXTRA_ARGS
