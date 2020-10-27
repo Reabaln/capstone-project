@@ -65,6 +65,7 @@
 
     // actually checkout
     casper.then(function() {
+      this.click("button#orderButton");
       this.waitForText("My orders", function() {
         test.pass("user is taken to the orders page");
       }, function() {
@@ -80,4 +81,4 @@
       test.done();
     });
   });
-}());
+i}());
