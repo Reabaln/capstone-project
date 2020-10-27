@@ -14,7 +14,6 @@ spec:
       type: string
       description: Tag of the images to be used.
       default: "latest"
-
   steps:
   - name: run-test
     image: $(params.imageUrl):$(params.imageTag)
