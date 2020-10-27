@@ -64,9 +64,6 @@ spec:
     - verify-digest
     taskRef:	
       name: e2e-test
-    workspaces:
-    - name: source
-      workspace: shared-workspace
     params:	
       - name: path	
         value: ./runner.sh #configure: may change according to your source
