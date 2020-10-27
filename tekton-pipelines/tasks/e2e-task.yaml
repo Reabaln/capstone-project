@@ -18,6 +18,5 @@ spec:
   - name: run-test
     image: $(params.imageUrl):$(params.imageTag)
     command: ["/bin/sh"]
-    args:
-      - "-c"
-      - "$(params.path)"
+    args: ["-c","$(params.path)"] 
+

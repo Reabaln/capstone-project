@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 code=0
 testfile=$1
