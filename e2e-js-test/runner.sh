@@ -4,11 +4,16 @@ code=0
 testfile=$1
 files=$testfile
 
+if [ -z $testfile ]
+then
+  files=$(ls /e2e-test/*_test.js)
+fi
 
-casperjs test $PWD/source/e2e-js-test/homepage_test.js
-casperjs test $PWD/source/e2e-js-test/login_test.js
-casperjs test $PWD/source/e2e-js-test/catalogue_test.js
-casperjs test $PWD/source/e2e-js-test/cart_test.js
-casperjs test $PWD/source/e2e-js-test/checkout_test.js
+for test in $files
+do
+  casperjs test $test
+  ret=$?
+  if [ ! $ret == "0" ]; then code=1; fi
+done
 
 exit $code

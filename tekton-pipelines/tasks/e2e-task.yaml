@@ -23,4 +23,4 @@ spec:
     command: ["/bin/sh"]
     args:
       - "-c"
-      - "$(workspaces.source.path)/$(params.path)"
+      - "$(params.path)"
