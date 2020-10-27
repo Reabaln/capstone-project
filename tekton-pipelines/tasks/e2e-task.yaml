@@ -17,6 +17,8 @@ spec:
   steps:
   - name: run-test
     image: $(params.imageUrl):$(params.imageTag)
-    command: ["/bin/sh"]
-    args: ["-c","$(params.path)"] 
-
+    script: |
+      #!/bin/sh
+      pwd
+      cd ../
+      /e2e-test/runner.sh
