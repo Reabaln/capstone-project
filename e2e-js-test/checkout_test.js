@@ -4,14 +4,22 @@
 
   var __utils__ = require("clientutils").create();
 
-  casper.test.begin("User buys some socks", 5, function(test) {
+    casper.test.begin("User buys some socks", 7, function(test) {
     // initial load and login
-    casper.start("http://front-end", function() {
+    casper.start("http://front-end/", function() {
+      test.assertNotVisible("#login-modal", "user does not see the login dialogue");
       this.clickLabel("Login");
+      casper.waitUntilVisible("#login-modal", function() {
+      test.assertVisible("#login-modal", "user is presented with the login dialogue");
       this.fill("#login-modal form", {
         "username": "my-username",
         "password": "password"
-      }, true);
+      }, false);
+      }, function() {
+        test.fail("login dialogue never showed up");
+      }, 3000);
+    });
+
       this.click("#login-modal form button.btn.btn-primary");
       this.waitForText("Logged in", function() {
         test.comment("user logged in");
@@ -81,4 +89,4 @@
       test.done();
     });
   });
-i}());
+}());
