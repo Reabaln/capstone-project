@@ -9,8 +9,8 @@
     casper.start("http://front-end", function() {
       this.clickLabel("Login");
       this.fill("#login-modal form", {
-        "username": "Eve_Berger",
-        "password": "duis"
+        "username": "username",
+        "password": "password"
       }, true);
       this.click("#login-modal form button.btn.btn-primary");
       this.waitForText("Logged in", function() {
