@@ -1,0 +1,8 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: monitor-logs-runner
+spec:
+  serviceAccountName: tekton-service-account
+  taskRef:
+    name: logging-monitoring-install 

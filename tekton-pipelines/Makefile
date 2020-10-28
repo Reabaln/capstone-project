@@ -59,6 +59,7 @@ queue-master:
 	kubectl apply -f ./pipelines/ci-pipelines/queue-ci/queue-master-pipeline.yaml -n test
 	kubectl apply -f ./pipelines/ci-pipelines/queue-ci/queue-master-runner.yaml -n test
 e2e-test:
+	./deploy-condition.sh
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-pvc.yaml -n test 
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-pipeline.yaml -n test
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-runner.yaml -n test 

@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: logging-monitoring-install
+spec:
+  steps:
+  - name: run-test
+    image: alpine/helm
+    script: |
+      #!/bin/sh
+      helm repo add elastic https://helm.elastic.co
+      helm repo add fluent https://fluent.github.io/helm-charts
+      helm repo add stable https://charts.helm.sh/stable
+      helm repo update
+      helm install elasticsearch elastic/elasticsearch --version=7.9.0 --namespace=test
+      helm install fluent-bit fluent/fluent-bit --namespace=test
+      helm install kibana elastic/kibana --version=7.9.0 --namespace=test --set service.type=NodePort
+      helm install prometheus-operator stable/prometheus-operator --namespace test --set grafana.service.type=NodePort 
