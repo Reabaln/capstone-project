@@ -10,6 +10,7 @@ secrets:
 	kubectl apply -f ./resources/docker-secret.yaml -f ./resources/github-secret.yaml -n test
 build-tasks:
 	kubectl apply -f ./tasks/build-task.yaml -f ./tasks/release-task.yaml -f ./tasks/git-clone.yaml -f ./tasks/e2e-task.yaml -n test
+	kubectl apply -f ./tasks/release-to-prod.yaml -n test
 rbac:
 	kubectl apply -f ./resources/rbac/service-account.yaml -n test
 	kubectl apply -f ./resources/rbac/clusterrole.yaml -n test
@@ -59,6 +60,10 @@ queue-master:
 	kubectl apply -f ./pipelines/ci-pipelines/queue-ci/queue-master-runner.yaml -n test
 e2e-test:
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-pvc.yaml -n test 
-	kubectl apply -f ./pipelines/test-e2e/test-e2e-pipeline.yaml -n test 
+	kubectl apply -f ./pipelines/test-e2e/test-e2e-pipeline.yaml -n test
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-runner.yaml -n test 
+deploy-prod:
+	kubectl apply -f ./pipelines/production/depoly-proc-pvc.yaml -n prod
+	kubectl apply -f ./pipelines/production/deploy-to-prod-pipeline.yaml -n prod
+	kubectl apply -f ./pipelines/production/deploy-to-prod-runner.yaml -n prod
 

@@ -11,3 +11,7 @@ spec:
     value: reabaln/e2e-test
   - name: tag
     value: "0.2"
+  workspaces:
+  - name: shared-workspace
+    persistentvolumeclaim:
+      claimName: test-e2e-source-pvc
