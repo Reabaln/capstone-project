@@ -25,11 +25,16 @@ spec:
     - name: deleteExisting
       value: "true"
   - name: e2e-test
+    runAfter:
+    - fetch-repository
     taskRef:	
       name: e2e-test
-    params:	
+    params:
+    workspaces:
+    - name: source
+      workspace: shared-workspace	
       - name: path	
-        value: /e2e-test/runner.sh  #configure: may change according to your source
+        value: ./e2e-test/runner.sh  #configure: may change according to your source
       - name: imageUrl
         value: $(params.image) 
       - name: imageTag

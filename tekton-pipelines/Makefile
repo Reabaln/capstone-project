@@ -1,4 +1,6 @@
+.PHONY: secrets resource user
 
+up: secrets rbac build-tasks deploy-test e2e-test deploy-prod
 tkn-cli:
 	sudo apt update
 	sudo apt install -y gnupg
@@ -19,7 +21,8 @@ rbac:
 resource:
 	kubectl apply -f ./pipelines/resource.yaml -n test
 
-all: front-end carts payment shipping queue-master orders user catalogue
+deploy-test: front-end carts payment shipping queue-master orders user catalogue
+
 carts: 
 	kubectl apply -f ./pipelines/ci-pipelines/carts-ci/carts-pvc.yaml -n test
 	kubectl apply -f ./pipelines/ci-pipelines/carts-ci/carts-pipeline.yaml -n test
@@ -64,7 +67,7 @@ e2e-test:
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-pipeline.yaml -n test
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-runner.yaml -n test 
 deploy-prod:
-	kubectl apply -f ./pipelines/production/depoly-proc-pvc.yaml -n prod
+	kubectl apply -f ./pipelines/production/deploy-prod-pvc -n prod
 	kubectl apply -f ./pipelines/production/deploy-to-prod-pipeline.yaml -n prod
 	kubectl apply -f ./pipelines/production/deploy-to-prod-runner.yaml -n prod
 

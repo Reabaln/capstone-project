@@ -20,5 +20,5 @@ spec:
     script: |
       #!/bin/sh
       pwd
-      cd ../
-      /e2e-test/runner.sh
+      "$(workspaces.source.path)/$(params.path)"
+
