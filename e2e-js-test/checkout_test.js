@@ -45,9 +45,9 @@
 
     // go to the shopping cart
     casper.then(function() {
-      this.waitForText(" item(s) in cart", function() {
+      this.waitForText("1 item(s) in cart", function() {
         test.pass("cart is updated with one product");
-        this.clickLabel(" item(s) in cart");
+        this.clickLabel("1 item(s) in cart");
       }, function() {
         test.fail("cart was not updated");
       }, 3000);
