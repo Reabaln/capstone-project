@@ -14,11 +14,12 @@ spec:
       type: string
       description: Tag of the images to be used.
       default: "latest"
+  workspaces:
+    - name: source
   steps:
   - name: run-test
     image: $(params.imageUrl):$(params.imageTag)
     script: |
       #!/bin/sh
-      pwd
-      cd ../
-      /e2e-test/runner.sh
+      "$(workspaces.source.path)/$(params.path)"
+

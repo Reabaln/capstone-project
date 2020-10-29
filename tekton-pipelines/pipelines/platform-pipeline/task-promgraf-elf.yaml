@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: logging-monitoring-install
+spec:
+
+  resources:
+    inputs:
+      - name: source
+        type: git
+  steps:
+  - name: run-test
+    image: alpine/helm
+    script: |
+      #!/bin/sh
+      # prepare repo 
+      helm repo add stable https://charts.helm.sh/stable
+      helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+      helm repo add grafana https://grafana.github.io/helm-charts
+      helm repo add elastic https://helm.elastic.co
+      helm repo add fluent https://fluent.github.io/helm-charts
+      helm repo add stable https://charts.helm.sh/stable
+      helm repo update
+      #install elf
+      helm install elasticsearch elastic/elasticsearch --version=7.9.0 --namespace=test
+      helm install fluent-bit fluent/fluent-bit --namespace=test
+      helm install kibana elastic/kibana --version=7.9.0 --namespace=test --set service.type=NodePort
+      #install promethous and grafana
+      pwd
+      helm install -n monitoring -f $(resources.inputs.source.path).platform/monitoring/prometheus-values.yaml prometheus prometheus-community/prometheus| tee -a output.log
+      helm install grafana grafana/grafana -n monitoring -f $(resources.inputs.source.path).platform/monitoring/grafana-values.yaml | tee -a output.log
+
+
