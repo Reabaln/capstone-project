@@ -47,7 +47,7 @@
     casper.then(function() {
       this.waitForText("1 item(s) in cart", function() {
         test.pass("cart is updated with one product");
-        this.clickLabel("1 item(s) in cart");
+        this.clickLabel("item(s) in cart");
       }, function() {
         test.fail("cart was not updated");
       }, 3000);
