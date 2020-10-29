@@ -67,7 +67,7 @@ e2e-test:
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-pipeline.yaml -n test
 	kubectl apply -f ./pipelines/test-e2e/test-e2e-runner.yaml -n test 
 deploy-prod:
-	kubectl apply -f ./pipelines/production/deploy-prod-pvc -n prod
+	kubectl apply -f ./pipelines/production/deploy-prod-pvc.yaml -n prod
 	kubectl apply -f ./pipelines/production/deploy-to-prod-pipeline.yaml -n prod
 	kubectl apply -f ./pipelines/production/deploy-to-prod-runner.yaml -n prod
 
