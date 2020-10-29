@@ -21,7 +21,8 @@
 
     casper.then(function() {
       this.click("#login-modal form button.btn.btn-primary");
-      this.waitForText("Logged in as", function() {
+      this.waitForText("Logged in as ", function() {
+
         test.pass("user is logged in");
       }, function() {
         test.fail("user login failed");
