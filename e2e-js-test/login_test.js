@@ -22,10 +22,15 @@
     casper.then(function() {
       this.click("#login-modal form button.btn.btn-primary");
 <<<<<<< HEAD
+<<<<<<< HEAD
       this.waitForText("Logged in as", function() {
 =======
       this.waitForText("Logged in as ", function() {
 >>>>>>> d270228cc25ab9e51495f0346aa7e498ba9909b4
+=======
+      this.waitForText("Logged in as ", function() {
+
+>>>>>>> 1b15e2bddd16ece062c0024b13df8ac1d410a234
         test.pass("user is logged in");
       }, function() {
         test.fail("user login failed");
