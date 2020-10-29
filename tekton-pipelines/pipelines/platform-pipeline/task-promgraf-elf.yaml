@@ -22,12 +22,12 @@ spec:
       helm repo add stable https://charts.helm.sh/stable
       helm repo update
       #install elf
-      helm install elasticsearch elastic/elasticsearch --version=7.9.0 --namespace= test
-      helm install fluent-bit fluent/fluent-bit --namespace= test
-      helm install kibana elastic/kibana --version=7.9.0 --namespace= test --set service.type=NodePort
-      #install promethous and grafana
-      pwd
-      helm install -n test -f $(resources.inputs.source.path)/logging-monitoring/monitoring/prometheus-values.yaml prometheus prometheus-community/prometheus| tee -a output.log
-      helm install grafana grafana/grafana -n test -f $(resources.inputs.source.path)/logging-monitoring/monitoring//grafana-values.yaml | tee -a output.log
+      helm install elasticsearch elastic/elasticsearch --version=7.9.0 -n logging
+      helm install fluent-bit fluent/fluent-bit -n logging
+      helm install kibana elastic/kibana --version=7.9.0 -n logging --set service.type=NodePort
+      #TODO install promethous and grafana
+      #pwd
+      helm install -n monitoring -f $(resources.inputs.source.path)/logging-monitoring/monitoring/prometheus-values.yaml prometheus prometheus-community/prometheus| tee -a output.log
+      helm install grafana grafana/grafana -n monitoring -f $(resources.inputs.source.path)/logging-monitoring/monitoring//grafana-values.yaml | tee -a output.log
 
 
