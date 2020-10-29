@@ -4,9 +4,10 @@ code=0
 testfile=$1
 files=$testfile
 pwd
+ls
 if [ -z $testfile ]
 then
-  files=$(ls /e2e-js-test/*_test.js)
+  files=$(ls ./source/e2e-js-test/*_test.js)
 fi
 
 for test in $files
