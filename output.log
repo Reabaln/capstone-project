@@ -20,7 +20,7 @@ serviceaccount/ingress-nginx-admission created
 cicd: install
 Monitoring: install-grafana
 NAME: prometheus
-LAST DEPLOYED: Thu Oct 29 22:50:15 2020
+LAST DEPLOYED: Fri Oct 30 12:04:31 2020
 NAMESPACE: monitoring
 STATUS: deployed
 REVISION: 1
@@ -59,7 +59,7 @@ For more information on running Prometheus, visit:
 https://prometheus.io/
 Monitoring: install-grafana
 NAME: grafana
-LAST DEPLOYED: Thu Oct 29 22:50:17 2020
+LAST DEPLOYED: Fri Oct 30 12:04:33 2020
 NAMESPACE: monitoring
 STATUS: deployed
 REVISION: 1

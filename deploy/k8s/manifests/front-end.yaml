@@ -7,7 +7,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: front-end
+      app: front-end
   template:
     metadata:
       labels:
@@ -54,4 +54,4 @@ spec:
     targetPort: 8079
     nodePort: 30001
   selector:
-    name: front-end
+    app: front-end

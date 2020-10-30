@@ -29,7 +29,7 @@ spec:
       - "--for=condition=Ready"
       - "pods"
       - "-l"
-      - "$(params.service)"
+      - "app=$(params.service)"
       - "timeout=600s"
 
   - name: run-test

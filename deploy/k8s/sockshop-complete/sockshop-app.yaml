@@ -222,7 +222,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: front-end
+      app: front-end
   template:
     metadata:
       labels:
@@ -268,7 +268,7 @@ spec:
     targetPort: 8079
     nodePort: 30002
   selector:
-    name: front-end
+    app: front-end
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -395,7 +395,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: payment
+      app: payment
   template:
     metadata:
       labels:
@@ -440,7 +440,7 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    name: payment
+    app: payment
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -618,7 +618,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: user-db
+      app: user-db
   template:
     metadata:
       labels:
@@ -652,7 +652,7 @@ spec:
   - port: 27017
     targetPort: 27017
   selector:
-    name: user-db
+    app: user-db
 ---
 apiVersion: apps/v1
 kind: Deployment
