@@ -107,5 +107,4 @@ spec:
       workspace: shared-workspace
     params: 
       - name: path
-        value: ./deploy/k8s/sockshop-complete/sockshop-app.yaml #configure: may change according to your source 
-	
+        value: ./deploy/k8s/sockshop-complete/sockshop-app.yaml #configure: may change according to your source	

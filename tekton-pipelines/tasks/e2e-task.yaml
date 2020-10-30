@@ -19,12 +19,22 @@ spec:
       default: "latest"
   workspaces:
     - name: source
+
   steps:
+  - name: pods-status
+    image: lachlanevenson/k8s-kubectl
+    command: ["kubectl"]
+    args:
+      - "wait"
+      - "--for=condition=Ready"
+      - "pods"
+      - "-l"
+      - "$(params.service)"
+      - "timeout=600s"
+
   - name: run-test
     image: $(params.imageUrl):$(params.imageTag)
     script: |
       #!/bin/sh
-       while [[ $(kubectl get pods -n test -l app="$(params.service)"  -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; \
- do echo "waiting for pod to be ready" && sleep 30; done
       "$(workspaces.source.path)/$(params.path)"
 

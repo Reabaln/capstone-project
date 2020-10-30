@@ -65,7 +65,7 @@ spec:
             ".sha"*) exit 0 ;;
             *)       echo "Digest value is not correct" && exit 1 ;;
           esac
-  - name: deploy-web	
+  - name: deploy-to-test
     runAfter:
     - verify-digest
     taskRef:	

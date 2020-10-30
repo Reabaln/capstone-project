@@ -82,7 +82,7 @@ spec:
         value: $(params.tag)
   - name: e2e-test
     runAfter:
-    - deplot-to-test
+    - deploy-to-test
     taskRef:	
       name: e2e-test
     workspaces:
