@@ -42,7 +42,7 @@ To Build and deploy Sockshop app, several Cloud-Native technologies and tools ha
 
 
 ### Installation
-Clone this project to your machine. Then add Github/Docker Hub secrets to tun Tekton pipelines. 
+Clone this project to your machine. Then add Github/Docker Hub secrets to be able to run Tekton pipelines. 
 
 **Prepare the platform by running the following command:**
 
