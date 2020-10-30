@@ -2,21 +2,35 @@
 #### Capstone Project - DevOps Bootcamp 
 This project uses the sockshop microservices web app developed by [Weaveworks](https://www.weave.works/) to domenstrate several Cloud-Native technolgies. 
 
-####Depolyment Platform 
+#### Depolyment Platform 
 This application is deployed on Kubernetes cluster (k3s)  with 4 nodes having NGINX as an Ingress Controller, Tekton as an automation controller, Prometheous/Grafana for monitoring, and ELF for logging (Fluent Bit, Elasticsearch and Kibana)
+
+**Tools used**
+
+![tools used](https://user-images.githubusercontent.com/63632708/97748824-22565d00-1aff-11eb-9bfb-42f94151fc8c.png)
 
 
 **Prometheus/Grafana**
 
+![proograaf-dashboard](https://user-images.githubusercontent.com/63632708/97748916-474ad000-1aff-11eb-9317-a954534927d5.png)
+
 **ELF** 
 
+![Kibana Dashboard](https://user-images.githubusercontent.com/63632708/97749584-5b430180-1b00-11eb-9093-1c224fd45f0d.png)
+
+**Tekton**
+
+![Tekton PR list](https://user-images.githubusercontent.com/63632708/97749802-bbd23e80-1b00-11eb-92b5-fb66db3e0a15.png)
 
 
 
-####Services Architecture 
+![Tekton Cart Pipeline](https://user-images.githubusercontent.com/63632708/97749814-c096f280-1b00-11eb-9b8d-ee0fd0d2bc2a.png)
+
+
+#### Services Architecture 
 ![Services Architectire](https://github.com/microservices-demo/microservices-demo.github.io/blob/HEAD/assets/Architecture.png?raw=true  "Weaveworks Sockshop Architecture")
 
-####Installation
+#### Installation
 Clone this project to your machine 
 
 **Prepare the platform by running the following command: **
