@@ -1,8 +1,10 @@
 
 ![Screenshot from 2020-10-30 23-29-59](https://user-images.githubusercontent.com/63632708/97754374-787bce00-1b08-11eb-983b-51bc8c150d51.png)
 
+
 ![Screenshot from 2020-10-30 23-28-16](https://user-images.githubusercontent.com/63632708/97754389-7c0f5500-1b08-11eb-8a94-88257a5252d3.png)
 
+![Screenshot from 2020-10-30 23-30-54](https://user-images.githubusercontent.com/63632708/97754222-2f2b7e80-1b08-11eb-9fd0-4a919cbb911f.png)
 
 ![Trello](https://user-images.githubusercontent.com/63632708/97754187-20dd6280-1b08-11eb-84c3-dd28bfb9376c.png)
 
@@ -16,4 +18,3 @@
 
 ![Screenshot from 2020-10-30 23-29-59](https://user-images.githubusercontent.com/63632708/97754215-2c308e00-1b08-11eb-8469-9f4550269af2.png)
 
-![Screenshot from 2020-10-30 23-30-54](https://user-images.githubusercontent.com/63632708/97754222-2f2b7e80-1b08-11eb-9fd0-4a919cbb911f.png)
