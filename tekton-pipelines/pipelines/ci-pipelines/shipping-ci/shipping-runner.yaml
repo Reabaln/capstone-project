@@ -11,6 +11,12 @@ spec:
     value: reabaln/shipping
   - name: tag
     value: "0.1"
+  - name: test-image
+    value: reabaln/e2e-test
+  - name: test-tag
+    value: "0.3"
+  - name: service
+    value: shipping
   workspaces:
   - name: shared-workspace
     persistentvolumeclaim:

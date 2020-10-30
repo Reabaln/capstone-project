@@ -7,6 +7,9 @@ spec:
     - name: path
       type: string
       description: Path to the manifest to apply
+    - name: service
+      type: string
+      description: Service under test
     - name: imageUrl
       type: string
       description: Url of image repository
@@ -21,5 +24,7 @@ spec:
     image: $(params.imageUrl):$(params.imageTag)
     script: |
       #!/bin/sh
+       while [[ $(kubectl get pods -n test -l app="$(params.service)"  -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; \
+ do echo "waiting for pod to be ready" && sleep 30; done
       "$(workspaces.source.path)/$(params.path)"
 
