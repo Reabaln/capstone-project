@@ -226,7 +226,7 @@ spec:
   template:
     metadata:
       labels:
-        name: front-end
+        app: front-end
     spec:
       containers:
       - name: front-end
@@ -399,7 +399,7 @@ spec:
   template:
     metadata:
       labels:
-        name: payment
+        app: payment
     spec:
       containers:
       - name: payment
@@ -622,7 +622,7 @@ spec:
   template:
     metadata:
       labels:
-        name: user-db
+        app: user-db
     spec:
       containers:
       - name: user-db
