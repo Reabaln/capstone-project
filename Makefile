@@ -1,5 +1,5 @@
 
-.PHONY: up down init cluster-up install uninstall logs repos namespaces cluster-down clean provision
+.PHONY: up down init build cluster-up cicd-sockshop install uninstall logs repos namespaces cluster-down clean provision front-end carts payment shipping queue-master orders user catalogue build-tasks
 
 up: cluster-up init install-ingress install-monitoring install-logging install-cicd install-tkn-cli 
 
@@ -157,7 +157,7 @@ install-tkn-cli:
 	echo "deb http://ppa.launchpad.net/tektoncd/cli/ubuntu eoan main"|sudo tee /etc/apt/sources.list.d/tektoncd-ubuntu-cli.list
 	sudo apt update && sudo apt install -y tektoncd-cli
 
-build: prod-ingress secrets rbac cicd-sockshop
+build: prod-ingress secrets rbac build-tasks cicd-sockshop
 
 prod-ingress: 
 	kubectl apply -f ./deploy/k8s/manifests/ingress.yaml -n prod 
@@ -170,13 +170,13 @@ rbac:
 	kubectl apply -f ./tekton-pipelines/resources/rbac/clusterrole.yaml -n test
 	kubectl apply -f ./tekton-pipelines/resources/rbac/clusterrole-binding.yaml -n test
 
-cicd-sockshop: front-end carts payment shipping queue-master orders user catalogue
-
-carts: 
+build-tasks:
+	kubectl apply -f ./tekton-pipelines/tasks/build-task.yaml  -f ./tekton-pipelines/tasks/git-clone.yaml -f ./tekton-pipelines/tasks/e2e-task.yaml -n test
+	kubectl apply -f ./tekton-pipelines/tasks/test-deploy.yaml -f ./tekton-pipelines/tasks/prod-deploy.yaml -n test
+carts:
 	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/carts-cicd/carts-pvc.yaml -n test
 	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/carts-cicd/carts-pipeline.yaml -n test
 	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/carts-cicd/carts-runner.yaml -n test
-
 payment: 
 	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/payment-cicd/payment-pvc.yaml -n test
 	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/payment-cicd/payment-pipeline.yaml -n test
@@ -215,4 +215,6 @@ queue-master:
 deploy-app:
 	kubectl apply -f ./deploy/k8s/sockshop-complete/sockshop-app.yaml -n test
 	kubectl apply -f ./deploy/k8s/manifests/ingress.yaml -n test
+
+cicd-sockshop:front-end carts payment shipping queue-master orders user catalogue
 
