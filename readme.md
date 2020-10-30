@@ -1,46 +1,57 @@
-# DevOps Bootcamp Level 3 Final Project
+# Sockshop: Microservices Application
+## Capstone Project - DevOps Bootcamp 
+This project uses the sockshop microservices web app developed by [Weaveworks](https://www.weave.works/) to domenstrate several Cloud-Native technolgies. 
 
-## Capstone Project
 
-The aim of the level 3 project is to give you something to demonstrate to potential employers. You will use this as a showcase for the skills you have developed and the tools you have mastered.
 
-## Objectives
-You are to demonstrate a near production-ready K8S platform hosting the [Weaveworks Shock Shop demo](https://github.com/microservices-demo). Your platform must build and deploy your fork of that project.
+### Services Architecture 
+The Sockshop Microservices applications is a web-based e-commerce app where users can browse items, add them to the cart, and purchase them. All services communicate using REST over HTTP. 
 
-## Method
-You will work alone, but you must track your tasks in trello and move them through a kanban process. You will capture am image of your trello board at the start and end of each day and add it to the file 'tasks.md' in the documentation folder.
+![Services Architectire](https://github.com/microservices-demo/microservices-demo.github.io/blob/HEAD/assets/Architecture.png?raw=true  "Weaveworks Sockshop Architecture")
 
-### Help
-Of course, nobody is ever really alone. If you are stuck for too long, ask for help from your colleagues and your instructor -- you will not be turned down. We are building a community here. However, plagarism will be detected and disallowed.
+### Depolyment Platform 
+This application is deployed on Kubernetes cluster (k3s)  with 4 nodes having NGINX as an Ingress Controller, Tekton as an automation controller, Prometheous/Grafana for monitoring, and ELF for logging (Fluent Bit, Elasticsearch and Kibana)
 
-### Chaos
-Your work should be fully automatable at all times. The instructor will run chaos tools over his ec2 estate between 7am and 11pm every day. Be prepared, keep every change in git. If you want an exception to this, add a tag to your instance: calm=12:00:00pm for example. This will cause chaos to pause for you for 2 hours from the specified time. You can only do this once a day max.
 
-### Hours
-All work is to be done in KH's AWS estate. The estate is open from 6am to 12am, and any running machines will be culled immediately at 12am every night without fail, and new machines cannot be created until 6am the next morning. This is to ensure that those of you who don't need a lot of sleep do not have an unfair advantage over those that need more.
+#### Tools used
+To Build and deploy Sockshop app, several Cloud-Native technologies and tools have been used as shown in the graph. It is built using Spring Boot, Go kit and Node.js and is packaged in Docker containers. 
 
-If you finish work earlier than that, please bring down your estate.
+![tools used](https://user-images.githubusercontent.com/63632708/97748824-22565d00-1aff-11eb-9bfb-42f94151fc8c.png)
 
-### Meetings
-There will be no zoom meetings during the project period.
 
-## Deliverables
-A single github repo containing all of your work. The root of the repo will have a readme containing directions on using the repo, and links to the other requried documents. You must have a documents folder containing a tasks.md file which hosts screenshots of your kanban board (see 'method') along with a dairy.md file where you must keep daily notes as to your progress and any blockers you have discovered and overcome.
 
-Your repo must be stand-alone and runnable in the sandbox using only the 'make up' command. A second command is allowed to start the build process 'make build'. Deployment to test and prod must be done automatically after a successful build.
+**Prometheus/Grafana**
+![proograaf-dashboard](https://user-images.githubusercontent.com/63632708/97748916-474ad000-1aff-11eb-9317-a954534927d5.png)
 
-## Infra
-You will run your project on the sandbox in k3d -- the techniques you demonstrate on this infra are exactly the same as with a fully distributed kubernetes instance, but its faster and easier so this will suffice.
 
-Please start with an XLarge instance, and increase the size of it if only when you have memory or other performance issues.
 
-## Platform
-You will run whatever platform level components that you see fit. As a minimum, we expect to see Tekton as an automation controller, Vault for secrets, ELF for logging, and Prometheus for monitoring.
+**ELF** 
+![Kibana Dashboard](https://user-images.githubusercontent.com/63632708/97749584-5b430180-1b00-11eb-9093-1c224fd45f0d.png)
 
-## Namespaces
-You will deploy the app's microservices to 'test' and 'prod' namespaces. The ci/cd tools will be in a cicd namespace. The other platform components will be in appropriately named spaces. The k8s-sandbox is suitably configured for tooling, but doesn't have a 'test' or 'prod' namespace.
 
-## Schedule
-The project must be completed by 21st of October. You will present it on the 22nd and 23rd with 5 minute presentations demonstrating the working system.
 
-Deadline is midnight 21st
+**Tekton**
+![Tekton PR list](https://user-images.githubusercontent.com/63632708/97749802-bbd23e80-1b00-11eb-92b5-fb66db3e0a15.png)
+
+
+![Tekton Cart Pipeline](https://user-images.githubusercontent.com/63632708/97749814-c096f280-1b00-11eb-9b8d-ee0fd0d2bc2a.png)
+
+![tekton running in parallel](https://user-images.githubusercontent.com/63632708/97755365-1623cd00-1b0a-11eb-992b-ae54c3b0ea44.png)
+
+
+
+
+### Installation
+Clone this project to your machine. Then add Github/Docker Hub secrets to tun Tekton pipelines. 
+
+**Prepare the platform by running the following command:**
+
+	Make up 
+
+**Build and deploy the project (CI/CD)**
+
+	Make Build 
+
+
+	
+

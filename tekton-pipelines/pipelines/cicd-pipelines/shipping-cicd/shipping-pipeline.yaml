@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: front-end-pipeline
+  name: shipping-pipeline
 spec:
   workspaces:
   - name: shared-workspace
@@ -10,6 +10,12 @@ spec:
     description: reference of the image to build
   - name: tag
     description: Tag of the images to build
+  - name: test-image
+    description: reference of the test image
+  - name: test-tag
+    description: Tag of the test image 
+  - name: service
+    description: Service to be tested
   tasks:
   - name: fetch-repository
     taskRef:
@@ -34,9 +40,9 @@ spec:
       workspace: shared-workspace
     params:
     - name: DOCKERFILE
-      value: ./front-end/Dockerfile
+      value: ./shipping/Dockerfile
     - name: CONTEXT
-      value: ./front-end
+      value: ./shipping
     - name: IMAGE
       value: $(params.image):$(params.tag)
     - name: EXTRA_ARGS
@@ -59,7 +65,7 @@ spec:
             ".sha"*) exit 0 ;;
             *)       echo "Digest value is not correct" && exit 1 ;;
           esac
-  - name: deploy-web	
+  - name: deploy-to-test
     runAfter:
     - verify-digest
     taskRef:	
@@ -69,8 +75,36 @@ spec:
       workspace: shared-workspace
     params:	
       - name: path	
-        value: ./deploy/k8s/manifests/front-end.yaml #configure: may change according to your source	
+        value: ./deploy/k8s/manifests/shipping.yaml #configure: may change according to your source
       - name: imageUrl
         value: $(params.image) 
       - name: imageTag
         value: $(params.tag)
+  - name: e2e-test
+    runAfter: 
+    -  deploy-to-test
+    taskRef:  
+      name: e2e-test
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    params:
+      - name: path
+        value: e2e-js-test/runner.sh  #configure: may change according to your source
+      - name: imageUrl
+        value: $(params.test-image)
+      - name: imageTag
+        value: $(params.test-tag)
+      - name: service
+        value: $(params.service)
+  - name: deploy-to-production  
+    runAfter: 
+    - e2e-test 
+    taskRef:  
+      name: deploy-using-kubectl-production
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    params: 
+      - name: path
+        value: ./deploy/k8s/sockshop-complete/sockshop-app.yaml #configure: may change according to your source	

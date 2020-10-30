@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: user-db
+      app: user-db
   template:
     metadata:
       labels:
-        name: user-db
+        app: user-db
     spec:
       containers:
       - name: user-db
@@ -42,7 +42,7 @@ spec:
   - port: 27017
     targetPort: 27017
   selector:
-    name: user-db
+    app: user-db
 ---
 apiVersion: apps/v1
 kind: Deployment

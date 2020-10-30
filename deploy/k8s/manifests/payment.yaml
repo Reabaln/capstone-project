@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: payment
+      app: payment
   template:
     metadata:
       labels:
-        name: payment
+        app: payment
     spec:
       containers:
       - name: payment
@@ -53,4 +53,4 @@ spec:
   - port: 80
     targetPort: 80
   selector:
-    name: payment
+    app: payment

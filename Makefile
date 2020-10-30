@@ -1,7 +1,7 @@
 
-.PHONY: up down init cluster-up install uninstall logs repos namespaces cluster-down clean provision
+.PHONY: up down init build cluster-up cicd-sockshop install uninstall logs repos namespaces cluster-down clean provision front-end carts payment shipping queue-master orders user catalogue build-tasks
 
-up: cluster-up init
+up: cluster-up init install-ingress install-monitoring install-logging install-cicd install-tkn-cli 
 
 down: cluster-down
 
@@ -150,15 +150,71 @@ delete-logging:
 	echo "Logging: delete-elasticsearch" | tee -a output.log
 	helm delete kibana elastic/kibana -n logging | tee -a output.log 2>/dev/null | true
 
+install-tkn-cli:
+	sudo apt update
+	sudo apt install -y gnupg
+	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3EFE0E0A2F2F60AA
+	echo "deb http://ppa.launchpad.net/tektoncd/cli/ubuntu eoan main"|sudo tee /etc/apt/sources.list.d/tektoncd-ubuntu-cli.list
+	sudo apt update && sudo apt install -y tektoncd-cli
 
+build: prod-ingress secrets rbac build-tasks cicd-sockshop
 
+prod-ingress: 
+	kubectl apply -f ./deploy/k8s/manifests/ingress.yaml -n prod 
 
+secrets:
+	kubectl apply -f ./tekton-pipelines/resources/docker-secret.yaml -f ./tekton-pipelines/resources/github-secret.yaml -n test
 
+rbac: 
+	kubectl apply -f ./tekton-pipelines/resources/rbac/service-account.yaml -n test
+	kubectl apply -f ./tekton-pipelines/resources/rbac/clusterrole.yaml -n test
+	kubectl apply -f ./tekton-pipelines/resources/rbac/clusterrole-binding.yaml -n test
 
+build-tasks:
+	kubectl apply -f ./tekton-pipelines/tasks/build-task.yaml  -f ./tekton-pipelines/tasks/git-clone.yaml -f ./tekton-pipelines/tasks/e2e-task.yaml -n test
+	kubectl apply -f ./tekton-pipelines/tasks/test-deploy.yaml -f ./tekton-pipelines/tasks/prod-deploy.yaml -n test
+carts:
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/carts-cicd/carts-pvc.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/carts-cicd/carts-pipeline.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/carts-cicd/carts-runner.yaml -n test
+payment: 
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/payment-cicd/payment-pvc.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/payment-cicd/payment-pipeline.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/payment-cicd/payment-runner.yaml -n test
 
-build: deploy-app
+shipping: 
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/shipping-cicd/shipping-pvc.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/shipping-cicd/shipping-pipeline.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/shipping-cicd/shipping-runner.yaml -n test
 
+front-end: 
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/front-end-cicd/front-end-pvc.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/front-end-cicd/front-end-pipeline.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/front-end-cicd/front-end-runner.yaml -n test
+
+user: 
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/user-cicd/user-pvc.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/user-cicd/user-pipeline.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/user-cicd/user-runner.yaml -n test
+
+orders: 
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/orders-cicd/orders-pvc.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/orders-cicd/orders-pipeline.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/orders-cicd/orders-runner.yaml -n test
+
+catalogue: 
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/catalogue-cicd/catalogue-pvc.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/catalogue-cicd/catalogue-pipeline.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/catalogue-cicd/catalogue-runner.yaml -n test
+
+queue-master: 
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/queue-cicd/queue-master-pvc.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/queue-cicd/queue-master-pipeline.yaml -n test
+	kubectl apply -f ./tekton-pipelines/pipelines/cicd-pipelines/queue-cicd/queue-master-runner.yaml -n test
+	
 deploy-app:
 	kubectl apply -f ./deploy/k8s/sockshop-complete/sockshop-app.yaml -n test
 	kubectl apply -f ./deploy/k8s/manifests/ingress.yaml -n test
+
+cicd-sockshop:front-end carts payment shipping queue-master orders user catalogue
 

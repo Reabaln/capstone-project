@@ -17,10 +17,9 @@ job.batch/ingress-nginx-admission-patch created
 role.rbac.authorization.k8s.io/ingress-nginx-admission created
 rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
 serviceaccount/ingress-nginx-admission created
-cicd: install
 Monitoring: install-grafana
 NAME: prometheus
-LAST DEPLOYED: Thu Oct 29 22:50:15 2020
+LAST DEPLOYED: Fri Oct 30 16:14:09 2020
 NAMESPACE: monitoring
 STATUS: deployed
 REVISION: 1
@@ -59,7 +58,7 @@ For more information on running Prometheus, visit:
 https://prometheus.io/
 Monitoring: install-grafana
 NAME: grafana
-LAST DEPLOYED: Thu Oct 29 22:50:17 2020
+LAST DEPLOYED: Fri Oct 30 16:14:11 2020
 NAMESPACE: monitoring
 STATUS: deployed
 REVISION: 1
@@ -101,3 +100,4 @@ NOTES:
 Logging: install-elasticsearch
 Logging: install-fluent-bit
 Logging: install-kibana
+cicd: install

@@ -7,6 +7,9 @@ spec:
     - name: path
       type: string
       description: Path to the manifest to apply
+    - name: service
+      type: string
+      description: Service under test
     - name: imageUrl
       type: string
       description: Url of image repository
@@ -16,7 +19,19 @@ spec:
       default: "latest"
   workspaces:
     - name: source
+
   steps:
+  - name: pods-status
+    image: lachlanevenson/k8s-kubectl
+    command: ["kubectl"]
+    args:
+      - "wait"
+      - "--for=condition=Ready"
+      - "pods"
+      - "-l"
+      - "app=$(params.service)"
+      - "--timeout=600s"
+
   - name: run-test
     image: $(params.imageUrl):$(params.imageTag)
     script: |
