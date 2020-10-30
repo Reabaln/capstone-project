@@ -5,8 +5,15 @@ This project uses the sockshop microservices web app developed by [Weaveworks](h
 #### Depolyment Platform 
 This application is deployed on Kubernetes cluster (k3s)  with 4 nodes having NGINX as an Ingress Controller, Tekton as an automation controller, Prometheous/Grafana for monitoring, and ELF for logging (Fluent Bit, Elasticsearch and Kibana)
 
-**Tools used**
 
+#### Services Architecture 
+The Sockshop Microservices applications consist of:
+![Services Architectire](https://github.com/microservices-demo/microservices-demo.github.io/blob/HEAD/assets/Architecture.png?raw=true  "Weaveworks Sockshop Architecture")
+
+
+
+**Tools used**
+To Build and deploy Sockshop app, several Cloud-Native technologies and tools have been used as shown in the graph 
 ![tools used](https://user-images.githubusercontent.com/63632708/97748824-22565d00-1aff-11eb-9bfb-42f94151fc8c.png)
 
 
@@ -26,9 +33,6 @@ This application is deployed on Kubernetes cluster (k3s)  with 4 nodes having NG
 
 ![Tekton Cart Pipeline](https://user-images.githubusercontent.com/63632708/97749814-c096f280-1b00-11eb-9b8d-ee0fd0d2bc2a.png)
 
-
-#### Services Architecture 
-![Services Architectire](https://github.com/microservices-demo/microservices-demo.github.io/blob/HEAD/assets/Architecture.png?raw=true  "Weaveworks Sockshop Architecture")
 
 #### Installation
 Clone this project to your machine 
