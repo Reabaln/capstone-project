@@ -1,6 +1,6 @@
 .PHONY: secrets resource user
 
-up: secrets rbac build-tasks deploy-test e2e-test deploy-prod
+up: secrets rbac build-tasks deploy-test
 tkn-cli:
 	sudo apt update
 	sudo apt install -y gnupg
