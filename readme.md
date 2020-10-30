@@ -32,11 +32,19 @@ To Build and deploy Sockshop app, several Cloud-Native technologies and tools ha
 
 **Tekton**
 ![Tekton PR list](https://user-images.githubusercontent.com/63632708/97749802-bbd23e80-1b00-11eb-92b5-fb66db3e0a15.png)
+<<<<<<< HEAD
 
 
 ![Tekton Cart Pipeline](https://user-images.githubusercontent.com/63632708/97749814-c096f280-1b00-11eb-9b8d-ee0fd0d2bc2a.png)
 
 
+=======
+
+
+![Tekton Cart Pipeline](https://user-images.githubusercontent.com/63632708/97749814-c096f280-1b00-11eb-9b8d-ee0fd0d2bc2a.png)
+
+
+>>>>>>> f0571c29887602980cf6bebb3db7c9f57af4fd22
 ### Installation
 Clone this project to your machine 
 
