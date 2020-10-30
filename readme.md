@@ -36,11 +36,13 @@ To Build and deploy Sockshop app, several Cloud-Native technologies and tools ha
 
 ![Tekton Cart Pipeline](https://user-images.githubusercontent.com/63632708/97749814-c096f280-1b00-11eb-9b8d-ee0fd0d2bc2a.png)
 
+![tekton running in parallel](https://user-images.githubusercontent.com/63632708/97755365-1623cd00-1b0a-11eb-992b-ae54c3b0ea44.png)
+
 
 
 
 ### Installation
-Clone this project to your machine.  
+Clone this project to your machine. Then add Github/Docker Hub secrets to tun Tekton pipelines. 
 
 **Prepare the platform by running the following command:**
 
