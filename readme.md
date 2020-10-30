@@ -12,23 +12,25 @@ The Sockshop Microservices applications consist of:
 
 
 
-**Tools used**
+
+#### Tools used
 To Build and deploy Sockshop app, several Cloud-Native technologies and tools have been used as shown in the graph 
 ![tools used](https://user-images.githubusercontent.com/63632708/97748824-22565d00-1aff-11eb-9bfb-42f94151fc8c.png)
 
 
-**Prometheus/Grafana**
 
+**Prometheus/Grafana**
 ![proograaf-dashboard](https://user-images.githubusercontent.com/63632708/97748916-474ad000-1aff-11eb-9317-a954534927d5.png)
 
-**ELF** 
 
+
+**ELF** 
 ![Kibana Dashboard](https://user-images.githubusercontent.com/63632708/97749584-5b430180-1b00-11eb-9093-1c224fd45f0d.png)
 
+
+
 **Tekton**
-
 ![Tekton PR list](https://user-images.githubusercontent.com/63632708/97749802-bbd23e80-1b00-11eb-92b5-fb66db3e0a15.png)
-
 
 
 ![Tekton Cart Pipeline](https://user-images.githubusercontent.com/63632708/97749814-c096f280-1b00-11eb-9b8d-ee0fd0d2bc2a.png)
