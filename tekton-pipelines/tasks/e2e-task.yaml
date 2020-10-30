@@ -30,7 +30,7 @@ spec:
       - "pods"
       - "-l"
       - "app=$(params.service)"
-      - "timeout=600s"
+      - "--timeout=600s"
 
   - name: run-test
     image: $(params.imageUrl):$(params.imageTag)
