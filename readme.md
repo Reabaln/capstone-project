@@ -5,12 +5,12 @@ This project uses the sockshop microservices web app developed by [Weaveworks](h
 
 
 ### Services Architecture 
-The Sockshop Microservices applications is a web-based e-commerce app where users can browse items, add them to the cart, and purchase them. All services communicate using REST over HTTP. 
+The Sockshop Microservices application is a web-based e-commerce app where users can browse items, add them to the cart, and purchase them. All services communicate using REST over HTTP. 
 
 ![Services Architectire](https://github.com/microservices-demo/microservices-demo.github.io/blob/HEAD/assets/Architecture.png?raw=true  "Weaveworks Sockshop Architecture")
 
 ### Depolyment Platform 
-This application is deployed on Kubernetes cluster (k3s)  with 4 nodes having NGINX as an Ingress Controller, Tekton as an automation controller, Prometheous/Grafana for monitoring, and ELF for logging (Fluent Bit, Elasticsearch and Kibana)
+This application is deployed on Kubernetes cluster (k3D)  with 4 nodes having NGINX as an Ingress Controller, Tekton as an automation controller, Prometheous/Grafana for monitoring, and ELF for logging (Fluent Bit, Elasticsearch and Kibana)
 
 
 #### Tools used
@@ -33,10 +33,11 @@ To Build and deploy Sockshop app, several Cloud-Native technologies and tools ha
 **Tekton**
 ![Tekton PR list](https://user-images.githubusercontent.com/63632708/97749802-bbd23e80-1b00-11eb-92b5-fb66db3e0a15.png)
 
+![tekton running in parallel](https://user-images.githubusercontent.com/63632708/97755365-1623cd00-1b0a-11eb-992b-ae54c3b0ea44.png)
+
 
 ![Tekton Cart Pipeline](https://user-images.githubusercontent.com/63632708/97749814-c096f280-1b00-11eb-9b8d-ee0fd0d2bc2a.png)
 
-![tekton running in parallel](https://user-images.githubusercontent.com/63632708/97755365-1623cd00-1b0a-11eb-992b-ae54c3b0ea44.png)
 
 
 
